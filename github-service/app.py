@@ -166,6 +166,21 @@ async def process_webhook(request: Request):
       'status': 200
     }
 
+  body = {
+    'input': description
+  }
+
+  tag_res = requests.post('http://127.0.0.1:4568/process', data=json.dumps(body))
+  tag_json = tag_res.json()
+
+
+  assig_res = request.post('http://127.0.0.1:5210/Issue/classify/0', data=json.dumps(tag_json))
+  assignee_json = assig_res.json()
+
+  assignee_name = assignee_json.get('assigned')
+  token = get_auth()
+  change_assigne(assignee_name, issue_num, token)
+
   return {
     'status': 200
   }
