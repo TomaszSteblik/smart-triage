@@ -36,17 +36,7 @@ public class IssueController : ControllerBase
         var labelsArray = labels.ToList();
         var assigned = await _classifier.ClassifyAssigned(labelsArray);
         var priority = await _classifier.ClassifyPriority(labelsArray);
-        var client = _httpClientFactory.CreateClient();
-        using StringContent jsonContent = new(
-            JsonSerializer.Serialize(new
-            {
-                id = id,
-                assigned = assigned.Assigned,
-                priority = priority.Priority
-            }),
-            Encoding.UTF8,
-            "application/json");
-        await client.PostAsync("http://localhost:4567/classified",jsonContent);
-        return Ok();
+        
+        return Ok(new Dto(id, assigned.Assigned, priority.Priority));
     }
 }
