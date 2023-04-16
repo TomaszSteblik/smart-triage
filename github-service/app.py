@@ -100,23 +100,30 @@ async def process_webhook(request: Request):
   if "[BUG]" in title:
     if "steps to reproduce" not in l_desc:
       post_comment(token, 'Please provide steps to reproduce.',issue_num)
+      return {
+        'status': 200
+      }
     if "description" not in l_desc:
       post_comment(token, 'Please provide description.',issue_num)
+      return {
+        'status': 200
+      }
     if "windows version" not in l_desc:
       post_comment(token, 'Please provide Windows version.',issue_num)
-
-    return {
-      'status': 200
-    }
+      return {
+        'status': 200
+      }
   elif "[FEAT]" in title:
     if "description" not in l_desc:
       post_comment(token, 'Please provide description.',issue_num)
+      return {
+        'status': 200
+      }
     if "requirements" not in l_desc:
       post_comment(token, 'Please provide requirements.',issue_num)
-    
-    return {
-      'status': 200
-    }
+      return {
+        'status': 200
+      }
   else:
     post_comment(token, 'Please mark the issue as [BUG] or [FEAT]',issue_num)
 
@@ -143,7 +150,10 @@ async def process_webhook(request: Request):
     token = get_auth()
     post_comment(token, 'Please provide more information.',issue_num)
 
-  print(title, description)
+    return {
+      'status': 200
+    }
+
   return {
     'status': 200
   }
