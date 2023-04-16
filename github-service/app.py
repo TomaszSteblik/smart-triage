@@ -40,6 +40,18 @@ def get_auth():
 
   return token
 
+def change_assigne(assignee, issue_num, token):
+    url = 'https://api.github.com/repos/{owner}/{repo}/issues/{issue_number}'
+    req_headers = {
+        "Authorization": f"Bearer {token}"
+      }
+    payload = {"assignees": [assignee]}
+
+    response = requests.patch(url.format(owner='TomaszSteblik', repo='smart-triage', issue_number=issue_num), headers=req_headers, json=payload)
+
+    print(response)
+
+
 def post_comment(token, message, issue_num):
   url = 'https://api.github.com/repos/{owner}/{repo}/issues/{issue_number}/comments'
 
